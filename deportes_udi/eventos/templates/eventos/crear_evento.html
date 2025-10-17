@@ -1,0 +1,41 @@
+{% extends "eventos/base.html" %}
+{% block title %}Crear Evento | UDI Deportes{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card p-4 shadow border-0">
+      <h2 class="text-center text-primary mb-4">Crear un Nuevo Evento</h2>
+      <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Nombre del evento</label>
+          <input type="text" name="nombre" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea name="descripcion" class="form-control" required></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha</label>
+            <input type="date" name="fecha" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Hora</label>
+            <input type="time" name="hora" class="form-control" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Lugar</label>
+          <input type="text" name="lugar" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Guardar Evento</button>
+      </form>
+      <div class="text-center mt-3">
+        <a href="{% url 'eventos' %}" class="btn btn-secondary">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

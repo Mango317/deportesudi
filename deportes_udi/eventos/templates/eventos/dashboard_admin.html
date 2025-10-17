@@ -1,0 +1,170 @@
+{% extends 'eventos/base.html' %}
+{% block content %}
+<div class="container mt-5 mb-5">
+
+    <!-- Título principal -->
+    <h2 class="text-center text-primary fw-bold mb-4">👑 Panel de Administración</h2>
+    <div class="alert alert-info text-center shadow-sm rounded-3">
+        Bienvenido, <strong>{{ user.username }}</strong> (Administrador)
+    </div>
+
+    <!-- ======================= TARJETAS DE RESUMEN ======================= -->
+    <div class="row mb-5 g-4">
+        <div class="col-md-4">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Total de Usuarios</h5>
+                    <p class="card-text fs-2 fw-bold">{{ total_usuarios }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Total de Eventos</h5>
+                    <p class="card-text fs-2 fw-bold">{{ total_eventos }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-info">Total de Inscripciones</h5>
+                    <p class="card-text fs-2 fw-bold">{{ total_inscripciones }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ======================= EVENTOS ======================= -->
+    <div class="card shadow-lg border-0 mb-5">
+        <div class="card-header bg-primary text-white fw-semibold d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Eventos</h5>
+            <a href="{% url 'crear_evento' %}" class="btn btn-light btn-sm">
+                <i class="bi bi-plus-circle"></i> Crear Evento
+            </a>
+        </div>
+        <div class="card-body bg-light">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover table-bordered">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Deporte</th>
+                            <th>Fecha</th>
+                            <th>Lugar</th>
+                            <th>Cupos</th>
+                            <th>Inscritos</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for evento in eventos %}
+                        <tr>
+                            <td>{{ evento.nombre }}</td>
+                            <td>{{ evento.get_deporte_display }}</td>
+                            <td>{{ evento.fecha|date:"d/m/Y" }}</td>
+                            <td>{{ evento.lugar }}</td>
+                            <td class="text-center">{{ evento.cupos }}</td>
+                            <td class="text-center">{{ evento.num_inscripciones }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'editar_evento' evento.id %}" class="btn btn-warning btn-sm me-1">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a href="{% url 'eliminar_evento' evento.id %}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="7" class="text-center text-muted">No hay eventos registrados.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================= INSCRIPCIONES ======================= -->
+    <div class="card shadow-lg border-0 mb-5">
+        <div class="card-header bg-success text-white fw-semibold d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Inscripciones</h5>
+        </div>
+        <div class="card-body bg-light">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover table-bordered">
+                    <thead class="table-success text-center">
+                        <tr>
+                            <th>Evento</th>
+                            <th>Usuario</th>
+                            <th>Fecha de Inscripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inscripcion in inscripciones %}
+                        <tr>
+                            <td>{{ inscripcion.evento.nombre }}</td>
+                            <td>{{ inscripcion.usuario.username }}</td>
+                            <td>{{ inscripcion.fecha_inscripcion|date:"d/m/Y H:i" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'cancelar_inscripcion' inscripcion.id %}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-x-circle"></i> Cancelar
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center text-muted">No hay inscripciones registradas.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================= USUARIOS ======================= -->
+    <div class="card shadow-lg border-0 mb-5">
+        <div class="card-header bg-dark text-white fw-semibold d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i>Usuarios</h5>
+        </div>
+        <div class="card-body bg-light">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover table-bordered">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Staff</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{ usuario.username }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td class="text-center">{{ usuario.is_staff|yesno:"Sí,No" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'detalle_usuario_admin' usuario.id %}" class="btn btn-info btn-sm me-1">
+                                    <i class="bi bi-eye"></i> Ver
+                                </a>
+                                <a href="{% url 'editar_usuario_admin' usuario.id %}" class="btn btn-warning btn-sm me-1">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a href="{% url 'eliminar_usuario_admin' usuario.id %}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center text-muted">No hay usuarios registrados.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

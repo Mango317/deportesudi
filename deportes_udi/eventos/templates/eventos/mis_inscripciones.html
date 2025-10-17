@@ -1,0 +1,44 @@
+{% extends "eventos/base.html" %}
+{% block title %}Mis Inscripciones | UDI Deportes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 style="text-align: center; margin-bottom: 2rem;">Mis Inscripciones</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    {% if inscripciones %}
+    <div class="grid">
+        {% for inscripcion in inscripciones %}
+        <div class="grid-item">
+            <div class="card">
+                <h3 class="card-title">{{ inscripcion.evento.nombre }}</h3>
+                <p>{{ inscripcion.evento.descripcion|truncatewords:20 }}</p>
+                <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #6c757d;">
+                    <li><strong>Fecha:</strong> {{ inscripcion.evento.fecha }}</li>
+                    <li><strong>Hora:</strong> {{ inscripcion.evento.hora }}</li>
+                    <li><strong>Lugar:</strong> {{ inscripcion.evento.lugar }}</li>
+                </ul>
+                <p style="font-size: 0.8rem; color: #6c757d;">Inscrito el {{ inscripcion.fecha_inscripcion|date:"d/m/Y H:i" }}</p>
+
+                <form method="post" action="{% url 'cancelar_inscripcion' inscripcion.id %}" onsubmit="return confirm('¿Estás seguro de que quieres cancelar esta inscripción?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" style="width: 100%; margin-top: 1rem;">
+                        Cancelar inscripción
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="alert alert-info" style="text-align: center;">
+            Aún no estás inscrito en ningún evento.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

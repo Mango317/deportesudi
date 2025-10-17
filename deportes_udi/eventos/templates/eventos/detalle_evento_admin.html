@@ -1,0 +1,53 @@
+{% load static %}
+{% extends "eventos/base.html" %}
+{% block title %}Detalle del Evento | UDI Deportes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white text-center fw-bold">
+      Detalle del Evento: {{ evento.nombre }}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <h6 class="text-muted">Deporte:</h6>
+          <p>{{ evento.deporte }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+          <h6 class="text-muted">Lugar:</h6>
+          <p>{{ evento.lugar }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+          <h6 class="text-muted">Fecha:</h6>
+          <p>{{ evento.fecha|date:"d/m/Y" }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+          <h6 class="text-muted">Hora:</h6>
+          <p>{{ evento.hora }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+          <h6 class="text-muted">Nivel:</h6>
+          <p>{{ evento.nivel }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+          <h6 class="text-muted">Cupos:</h6>
+          <p>{{ evento.cupos }}</p>
+        </div>
+        <div class="col-md-12 mb-3">
+          <h6 class="text-muted">Descripción:</h6>
+          <p>{{ evento.descripcion }}</p>
+        </div>
+        <div class="col-md-12">
+          <h6 class="text-muted">Observaciones:</h6>
+          <p>{{ evento.observaciones|default:"Sin observaciones." }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <a href="{% url 'editar_evento' evento.id %}" class="btn btn-warning text-white">✏️ Editar</a>
+      <a href="{% url 'panel_admin_eventos' %}" class="btn btn-secondary">⬅ Volver</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

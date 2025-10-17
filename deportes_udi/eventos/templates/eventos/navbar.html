@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="logo">
+    <a href="{% url 'home' %}"><span class="logo-blue">UDI</span><span class="logo-orange">Deportes</span></a>
+  </div>
+  <ul class="nav-links">
+    {% if user.is_authenticated %}
+      {% if not user.is_staff %}
+        <li><a href="{% url 'eventos' %}">Eventos</a></li>
+        <li><a href="{% url 'mis_inscripciones' %}">Mis Inscripciones</a></li>
+      {% endif %}
+      <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li><a href="{% url 'profile' %}">Mi Perfil</a></li>
+      <li><a href="#" onclick="document.getElementById('logout-form').submit(); return false;" class="bton-cerrarsecion ">Cerrar sesión</a></li>
+    {% else %}
+      <li><a href="{% url 'login' %}" class="btn login-btn">Iniciar sesión</a></li>
+      <li><a href="{% url 'register' %}" class="btn register-btn">Registrarse</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% if user.is_authenticated %}
+<form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
+    {% csrf_token %}
+</form>
+{% endif %}

@@ -1,0 +1,17 @@
+{% extends 'eventos/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card user-details-card">
+        <h2 class="text-center">Detalles del Usuario</h2>
+        <div class="card-body">
+            <p><strong>Username:</strong> {{ usuario.username }}</p>
+            <p><strong>Email:</strong> {{ usuario.email }}</p>
+            <p><strong>Nombre:</strong> {{ usuario.first_name }}</p>
+            <p><strong>Apellido:</strong> {{ usuario.last_name }}</p>
+            <p><strong>Staff:</strong> {{ usuario.is_staff|yesno:"Sí,No" }}</p>
+        </div>
+    </div>
+    <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Volver al Dashboard</a>
+</div>
+{% endblock %}

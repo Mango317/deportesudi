@@ -1,0 +1,41 @@
+{% extends "eventos/base.html" %}
+{% block title %}UDI Deportes - Inicio{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenido a <span>UDI Deportes</span></h1>
+    <p>Descubre, inscríbete y participa en los eventos deportivos de la Universidad de Investigación y Desarrollo.</p>
+
+    <div class="hero-buttons">
+      {% if user.is_authenticated %}
+        <p class="saludo">👋 ¡Hola, {{ user.username }}!</p>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Ir al Dashboard</a>
+        <a href="{% url 'eventos' %}" class="btn btn-secondary">Ver Eventos</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary">Registrarse</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="container features">
+  <h2 class="text-center">¿Qué puedes hacer en UDI Deportes?</h2>
+  <div class="grid">
+    <div class="grid-item card">
+      <h3 class="card-title">🏅 Participa en eventos</h3>
+      <p>Explora todos los eventos deportivos disponibles y elige en cuáles deseas competir o asistir.</p>
+    </div>
+    <div class="grid-item card">
+      <h3 class="card-title">📊 Consulta tu progreso</h3>
+      <p>Accede a tu panel personal y lleva el control de tus inscripciones, actividades y estadísticas deportivas.</p>
+    </div>
+    <div class="grid-item card">
+      <h3 class="card-title">💬 Conéctate con otros</h3>
+      <p>Comparte experiencias, conoce compañeros deportistas y forma parte activa de la comunidad UDI.</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}UDI Deportes Corporativo{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/estilos_udi.css' %}">
+</head>
+<body>
+
+  {% include "eventos/navbar.html" %}
+
+  <main class="container py-5">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p class="mb-0">© 2025 <strong>UDI Deportes</strong> | Gestión Deportiva Inteligente</p>
+  </footer>
+
+
+</body>
+</html>

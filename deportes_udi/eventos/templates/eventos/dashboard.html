@@ -1,0 +1,28 @@
+{% extends "eventos/base.html" %}
+
+{% block title %}Dashboard | UDI Deportes{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+  <h2>Bienvenido, {{ user.username }} 👋</h2>
+  <p style="font-size: 1.2rem; color: #6c757d;">¿Qué te gustaría hacer hoy?</p>
+</div>
+
+<div class="grid">
+  <div class="grid-item">
+    <div class="card" style="text-align: center;">
+      <h3 class="card-title">Ver Eventos</h3>
+      <p>Explora todos los eventos deportivos disponibles en la UDI.</p>
+      <a href="{% url 'eventos' %}" class="btn btn-primary">Ver eventos</a>
+    </div>
+  </div>
+
+  <div class="grid-item">
+    <div class="card" style="text-align: center;">
+      <h3 class="card-title">Mis Inscripciones</h3>
+      <p>Consulta y gestiona tus inscripciones activas.</p>
+      <a href="{% url 'mis_inscripciones' %}" class="btn btn-secondary">Ver mis inscripciones</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
